@@ -156,6 +156,39 @@ esp_io_expander_print_state(io_expander);
 
 ---
 
+---
+
+## Using with PlatformIO (ESP-IDF framework)
+
+If you are using **PlatformIO** with the **ESP-IDF framework** (not Arduino), the ESP-IDF Component Manager is not directly available via `platformio.ini`.
+
+Instead, you need to create an `idf_component.yml` file inside your `src/` folder.
+
+### Steps
+
+1. In your PlatformIO project, create the file `src/idf_component.yml`.
+2. Add the following content:
+
+```yaml
+dependencies:
+
+  esp_io_expander_PCAL6416A_16bit:
+    git: "https://github.com/dominicpoeschko/esp_io_expander_PCAL6416A_16bit.git"
+```
+
+3. Build your project (`platformio run`). PlatformIO will automatically download the component into `managed_components/` via the ESP-IDF Component Manager.
+
+> **Note:** Make sure your `platformio.ini` uses `framework = espidf` and not `framework = arduino`.
+
+```ini
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = espidf
+```
+
+> **Note:** The example code uses the new ESP-IDF v5 I2C master API (`driver/i2c_master.h`). Make sure you are using **ESP-IDF 5.x** or later.
+
 ## License
 
 Apache-2.0 — see [LICENSE](./LICENSE) for details.
